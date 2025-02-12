@@ -1,0 +1,58 @@
+### //Get all car lists
+GET http://localhost:8080/carlists 
+
+### //Get car id = 1
+GET http://localhost:8080/carlists/id/1
+
+### //Add new car detail 
+POST http://localhost:8080/carlists
+Content-Type: application/json
+
+{
+    "carType": "Saloon",
+    "carBrand": "Audi",
+    "licensePlate": "RS7899",
+    "carLocation": "Front of Office",
+    "carModel": "RS6",
+    "carColor": "Nardo Grey",
+    "CarInsurance": true,
+    "carStatus": "Rental",
+    "milege": "2000km",
+    "rentalStartDate": "Test",
+    "rentalEndDate": "Test",
+    "price": 90
+}
+
+### //Update car detail
+PUT http://localhost:8080/carlists/1
+Content-Type: application/json
+
+{
+    "carType": "Sedan",
+    "carBrand": "Toyota",
+    "licensePlate": "AB1000",
+    "carLocation": "1st Floor",
+    "carModel": "Camry",
+    "carColor": "White",
+    "carInsurance": true,
+    "carStatus": "Rental",
+    "milege": "15000KM",
+    "rentalStartDate": null,
+    "rentalEndDate": null,
+    "price": 50.0
+}
+
+### //Search car by type
+GET http://localhost:8080/carlists/type/Suv
+
+### //Search car by brand
+GET http://localhost:8080/carlists/brand/Porsche
+
+### //Delete car by id
+DELETE http://localhost:8080/carlists/1
+
+### //Sort by lowest price to highest price
+GET http://localhost:8080/carlists/price/lowtohigh
+
+### //Sort by highest price to lowest price
+GET http://localhost:8080/carlists/price/hightolow
