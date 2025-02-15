@@ -1,9 +1,11 @@
 package dev.haritch.carrental;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -21,15 +23,23 @@ public class Storage {
     private boolean carInsurance;
     private String carStatus;
     private String milege;
-    private String rentalStartDate;
-    private String rentalEndDate;
+    //private String rentalStartDate;
+    //private String rentalEndDate;
     private double price;
+
+    @Column (name = "rentalStartDate")
+    private LocalDate rentalStartDate;
+
+    @Column (name = "rentalEndDate")
+    private LocalDate rentalEndDate;
+
+    private Integer rentalDays;
 
     Storage() {}
 
     public Storage(String carType, String carBrand, String licensePlate, String carLocation, String carModel, 
-                    String carColor, boolean carInsurance, String carStatus, String milege, String rentalStartDate
-                    , String rentalEndDate, double price){
+                    String carColor, boolean carInsurance, String carStatus, String milege, LocalDate rentalStartDate
+                    , LocalDate rentalEndDate, double price){
         this.carType = carType;
         this.carBrand = carBrand;
         this.licensePlate = licensePlate;
@@ -116,20 +126,27 @@ public class Storage {
         this.milege = milege;
     }
 
-    public String getRentalStartDate() {
+    public LocalDate getRentalStartDate() {
         return rentalStartDate;
     }
 
-    public void setRentalStartDate(String rentalStartDate) {
+    public void setRentalStartDate(LocalDate rentalStartDate) {
         this.rentalStartDate = rentalStartDate;
     }
 
-    public String getRentalEndDate() {
+    public LocalDate getRentalEndDate() {
         return rentalEndDate;
     }
 
-    public void setRentalEndDate(String rentalEndDate) {
+    public void setRentalEndDate(LocalDate rentalEndDate) {
         this.rentalEndDate = rentalEndDate;
+    } 
+
+    public void setRentalDays(Integer rentalDays){
+        this.rentalDays = rentalDays;
+        if(rentalStartDate != null && rentalDays != null){
+            this.rentalEndDate = rentalStartDate.plusDays(rentalDays);
+        }
     }
 
     public double getPrice() {
@@ -147,8 +164,6 @@ public class Storage {
     public void setId(Long id){
         this.id = id;
     }
-
-    
 
     @Override
     public boolean equals(Object obj) {

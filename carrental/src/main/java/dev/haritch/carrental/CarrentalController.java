@@ -1,5 +1,6 @@
 package dev.haritch.carrental;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,14 +42,31 @@ public class CarrentalController {
         return carlists.get();
     }
 
-    @GetMapping("/carlists/type/{CarType}")
-    List<Storage> findcarByType(@PathVariable String CarType){
-        return repository.findByCarType(CarType);
+    @GetMapping("/carlists/licenseplate/{licensePlate}")
+    Storage findOne(@PathVariable String licensePlate) {
+        Optional<Storage> carlists = repository.findByLicensePlate(licensePlate);
+        if(carlists.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no license plate by given");
+        }
+        return carlists.get();
     }
 
-    @GetMapping("/carlists/brand/{CarBrand}")
-    List<Storage> findcarByBrand(@PathVariable String CarBrand){
-        return repository.findByCarBrand(CarBrand);
+    @GetMapping("/carlists/type/{carType}")
+    List<Storage> findcarByType(@PathVariable String carType) {
+        List<Storage> carlists = repository.findByCarType(carType);
+        if(carlists.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no car type by given");
+        }
+        return carlists;
+    }
+    
+    @GetMapping("/carlists/brand/{carBrand}")
+    List<Storage> findcarByBrand(@PathVariable String carBrand) {
+        List<Storage> carlists = repository.findByCarBrand(carBrand);
+        if(carlists.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"no car brand by given");
+        }
+        return carlists;
     }
 
     @PutMapping("/carlists/{id}")
@@ -66,7 +84,7 @@ public class CarrentalController {
             carlists.setPrice(newCarLists.getPrice());
             carlists.setRentalStartDate(newCarLists.getRentalStartDate());
             carlists.setRentalEndDate(newCarLists.getRentalEndDate());
-            return repository.save(newCarLists);
+            return repository.save(carlists);
         }).orElseGet(() -> {
             return repository.save(newCarLists);
         });
@@ -92,5 +110,11 @@ public class CarrentalController {
     List<Storage> findcarByHightoLowPrice() {
         return repository.findAll(Sort.by(Sort.Order.desc("price")));
     }
+
+    @PostMapping("/carlists/rentcar/{carId}")
+    public String rentCar(@PathVariable Long carId, @RequestParam LocalDate rentalStartDate, @RequestParam int rentalDays) {
+        return "Car rented successfully from " + rentalStartDate + " for " + rentalDays + " days.";
+    }
+    
     
 }

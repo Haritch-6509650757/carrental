@@ -18,8 +18,8 @@ Content-Type: application/json
     "CarInsurance": true,
     "carStatus": "Rental",
     "milege": "2000km",
-    "rentalStartDate": "Test",
-    "rentalEndDate": "Test",
+    "rentalStartDate": null,
+    "rentalEndDate": null,
     "price": 90
 }
 
@@ -45,8 +45,14 @@ Content-Type: application/json
 ### //Search car by type
 GET http://localhost:8080/carlists/type/Suv
 
+### //Search car by type that doesn't exists
+GET http://localhost:8080/carlists/type/Coupe
+
 ### //Search car by brand
 GET http://localhost:8080/carlists/brand/Porsche
+
+### //Search car by brand that doesn't exists
+GET http://localhost:8080/carlists/brand/Volkswagen
 
 ### //Delete car by id
 DELETE http://localhost:8080/carlists/1
@@ -56,3 +62,9 @@ GET http://localhost:8080/carlists/price/lowtohigh
 
 ### //Sort by highest price to lowest price
 GET http://localhost:8080/carlists/price/hightolow
+
+### //Sort by license plate
+GET http://localhost:8080/carlists/licenseplate/KS9099
+
+### //Rental date and date of used
+POST http://localhost:8080/carlists/rentcar/1?rentalStartDate=2025-02-13&rentalDays=5
