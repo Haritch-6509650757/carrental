@@ -11,7 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Storage {
+public class CarStorage {
     private @Id
     @GeneratedValue Long id;
     private String carType;
@@ -35,9 +35,9 @@ public class Storage {
 
     private Integer rentalDays;
 
-    Storage() {}
+    CarStorage() {}
 
-    public Storage(String carType, String carBrand, String licensePlate, String carLocation, String carModel, 
+    public CarStorage(String carType, String carBrand, String licensePlate, String carLocation, String carModel, 
                     String carColor, boolean carInsurance, String carStatus, String milege, LocalDate rentalStartDate
                     , LocalDate rentalEndDate, double price){
         this.carType = carType;
@@ -173,7 +173,7 @@ public class Storage {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Storage other = (Storage) obj;
+        CarStorage other = (CarStorage) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
